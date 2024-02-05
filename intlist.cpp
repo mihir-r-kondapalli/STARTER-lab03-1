@@ -9,9 +9,6 @@ using std::cout;
 
 // copy constructor
 IntList::IntList(const IntList& source) {
-
-    source.print();
-    cout << std::endl;
     
     if(source.first==nullptr)
     {
@@ -117,7 +114,22 @@ void IntList::insertFirst(int value) {
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
     
-    first = source.first;
+    Node* del_temp = first;
+    first = nullptr;
+    while(del_temp!=nullptr)
+    {
+        Node* curr = del_temp;
+        del_temp = del_temp->next;
+        delete curr;
+    }
+    
+    Node* copy_temp = source.first;
+    
+    while(copy_temp != nullptr)
+    {
+        append(copy_temp->info);
+        copy_temp = copy_temp->next;
+    }
 
     return *this;
 }
